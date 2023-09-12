@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orjujeng.profile.mapper.MemberMapper">
+ <select id="getMemberinfoByAccount" parameterType="String" resultType="com.orjujeng.profile.entity.MemberInfo">
+  SELECT * FROM member_info WHERE account_num = #{account_member};
+ </select>
+  <select id="getAllMemberinfo" parameterType="String" resultType="com.orjujeng.profile.entity.MemberInfo">
+  SELECT * FROM member_info WHERE account_num;
+ </select>
+ <update id="updateMemberinfoByAccountNum" parameterType="com.orjujeng.profile.entity.MemberInfo">
+  update member_info
+  <set> 
+  		<if test="nameZh!= null">
+            name_zh = #{nameZh},
+        </if>
+        <if test="nameCn != null">
+            name_cn = #{nameCn},
+        </if>
+        <if test="managerId != null">
+            manager_id = #{managerId},
+        </if>
+        <if test="perm != null">
+            perm = #{perm},
+        </if>
+        <if test="joinDate != null">
+            join_date = #{joinDate},
+        </if>
+        <if test="expiredDate != null">
+            expired_date = #{expiredDate},
+        </if>
+        <if test="authOfBackend != null">
+            auth_of_backend = #{authOfBackend},
+        </if>
+       
+        last_updated_date = sysdate()
+        </set> 
+        where account_num = #{accountNum}
+ </update>
+ <insert id="insertMemberinfoLog" parameterType ="com.orjujeng.profile.entity.MemberInfoLog" useGeneratedKeys="true" keyProperty="seqId">
+    insert into member_info_log(id,account_num,name_zh,name_cn,manager_id,perm,join_date,expired_date,last_updated_date,auth_of_backend,update_by,action,delete_flag) values (#{id},#{accountNum},#{nameZh},#{nameCn},#{managerId},#{perm},#{joinDate},#{expiredDate},sysdate(),#{authOfBackend},#{updateBy},#{action},#{deleteFlag});
+ </insert>
+ 
+  <insert id="insertMemberInfo" parameterType ="com.orjujeng.profile.entity.MemberInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into member_info(name_zh,name_cn,account_num,manager_id,perm,join_date,expired_date,last_updated_date,auth_of_backend,delete_flag) values 
+    (#{nameZh},#{nameCn},(
+    select * from (
+    	select max(account_num) + 1 
+    	from member_info 
+    	) as bais_info
+    ),#{managerId},#{perm},#{joinDate},#{expiredDate},sysdate(),#{authOfBackend},'N');
+ </insert>
+ 
+ <select id="getMemberInfoByMaxId" resultType="com.orjujeng.profile.entity.MemberInfo">
+ 	SELECT * FROM member_info 
+ 	where id = (SELECT max(id) FROM member_info);
+ </select>
+</mapper>

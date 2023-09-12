@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orjujeng.profile.mapper.ProjectMapper">
+	<select resultType="com.orjujeng.profile.entity.ProjectInfo" parameterType = "String" id="getAllProjectinfo">
+		select * from project_info 
+		<if test="date != null">
+            where expire_date &gt; #{date}
+        </if>
+	</select>
+	
+	<select resultType="com.orjujeng.profile.entity.ProjectInfo" parameterType = "String" id="getProjectById">
+		select * from project_info where id = ${id}
+
+	</select>
+	
+	<update id="updateProjectInfo" parameterType="com.orjujeng.profile.entity.ProjectInfo" >
+  	update project_info
+  	<set>
+  	<if test="projectCode!= null">
+         project_code=#{projectCode},
+    </if>
+    <if test="projectName!= null">
+         project_name = #{projectName},
+    </if>
+  	<if test="expireDate!= null">
+        expire_date = #{expireDate},
+    </if>
+  		last_updated_date = sysdate() 
+  	</set>
+  		where id = ${id};
+  	</update>
+  	<insert id="insertNewProject" parameterType ="com.orjujeng.profile.entity.ProjectInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into project_info(project_code,project_name,last_updated_date,expire_date) values (#{projectCode},#{projectName},sysdate(),#{expireDate});
+ 	</insert>
+  	
+</mapper>
