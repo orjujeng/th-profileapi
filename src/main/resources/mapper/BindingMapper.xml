@@ -3,8 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.orjujeng.profile.mapper.BindingMapper">
-	<select id="getBindingInfo" parameterType="Integer" resultType="com.orjujeng.profile.entity.BindingInfo">
-  		SELECT * FROM binding_info WHERE member_id  = ${member_id} and account_num = #{accountNum};
+	<select id="getBindingInfo" resultType="com.orjujeng.profile.entity.BindingInfo">
+  		SELECT * FROM binding_info 
+  		<where>
+  		<if test = "member_id!=null">
+  		member_id  = ${member_id} 
+  		 </if>
+  		<if test = "account_num!=null">
+  		 and account_num = #{account_num} 
+  		</if>
+  		<if test = "id!=null">
+		 and id = #{id}
+		</if>
+		</where>
  	</select>
  	
  	
@@ -27,9 +38,13 @@
 		changed_by = #{changedBy}
 		</set>
 		where member_id = ${memberId} and account_num = #{accountNum}
+		and id =${id}
 	</update>
 	<insert id ="insertBindInfoLog" parameterType="com.orjujeng.profile.entity.BindingInfoLog" useGeneratedKeys="true" keyProperty="seqId">
 	insert into binding_info_log(id,member_id,account_num,project_code,start_date,expire_date,proportion,last_update_date,changed_by,action) 
 	values (${id},${memberId},#{accountNum},#{projectCode},#{startDate},#{expireDate},#{proportion},sysdate(),#{changedBy},#{action});
+	</insert>
+	<insert id ="insertBindingInfo" parameterType="com.orjujeng.profile.entity.BindingInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into binding_info(member_id,account_num,project_code,start_date,expire_date,proportion,last_update_date,changed_by) values(${memberId},#{accountNum},#{projectCode},#{startDate},#{expireDate},#{proportion},sysdate(),#{changedBy});
 	</insert>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.orjujeng.profile.entity.AddBindingInfo;
 import com.orjujeng.profile.entity.BindingInfo;
 import com.orjujeng.profile.entity.ProjectInfo;
 import com.orjujeng.profile.entity.UpdateBindingInfo;
@@ -27,8 +29,20 @@ public class BindingController {
 	@Autowired
 	BindingService bindingService;
 	@PostMapping("/updatebinding")
-	public Result getAllbinding(@RequestBody @Valid UpdateBindingInfo bindingInfo) {
+	public Result updatebinding(@RequestBody @Valid UpdateBindingInfo bindingInfo) {
 		bindingService.updateBindingInfo(bindingInfo);
-		return Result.successWithMsg("update Binding Info Success",null);
+		return Result.successWithMsg(null,"update Binding Info Success");
+	}
+	
+	@PostMapping("/addbinding")
+	public Result addbinding(@RequestBody @Valid AddBindingInfo bindingInfo) {
+		bindingService.addBindingInfo(bindingInfo);
+		return Result.successWithMsg(null,"Insert Binding Info Success");
+	}
+	
+	@GetMapping("/findbinding")
+	public Result findbinding(@RequestParam(required = false) String id,@RequestParam(required = false)String memberId,@RequestParam(required = false) @Length(min = 8, max = 8, message = "Account Number Must 8 Digs") String accountNum) {
+		List<BindingInfo> result = bindingService.checkBindingInfo(id,memberId,accountNum);
+		return Result.successWithMsg(result,"Success");
 	}
 }

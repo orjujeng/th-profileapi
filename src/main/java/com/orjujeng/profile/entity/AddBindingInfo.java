@@ -26,7 +26,7 @@ public class AddBindingInfo {
 	private Date startDate;
 	@NotNull
 	private Date expireDate;
-	@Pattern (regexp="^([1-9]|[1-9]\\\\d|100)$",message = "proportion From 1 - 100")
+//	@Pattern (regexp="^([1-9]|[1-9]\\\\d|100)$",message = "proportion From 1 - 100")
 	private Integer proportion;
 	private Date lastUpdateDate;
 	@NotNull

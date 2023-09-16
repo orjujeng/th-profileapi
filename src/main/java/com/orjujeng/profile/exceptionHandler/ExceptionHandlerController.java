@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.orjujeng.profile.exception.AccountMultipleException;
 import com.orjujeng.profile.exception.AccountNotExistException;
+import com.orjujeng.profile.exception.BindingInfoNotMatchException;
 import com.orjujeng.profile.exception.CreateNewProjectMsgUnfitExcption;
 import com.orjujeng.profile.exception.CreateProfileMsgUnfitException;
 import com.orjujeng.profile.exception.ProjectInfoIdNotFoundException;
@@ -54,6 +55,13 @@ public class ExceptionHandlerController {
 	@ResponseBody
 	@ExceptionHandler(value = CreateNewProjectMsgUnfitExcption.class)
     public Result createNewProjectMsgUnfitExcptionHandler(CreateNewProjectMsgUnfitExcption e){
+		log.error(e.getMessage(),e);
+		return Result.error(ResultCode.FAIL.code,e.getMessage(),null);
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(value = BindingInfoNotMatchException.class)
+    public Result bindingInfoNotMatchExceptionHandler(BindingInfoNotMatchException e){
 		log.error(e.getMessage(),e);
 		return Result.error(ResultCode.FAIL.code,e.getMessage(),null);
 	}
