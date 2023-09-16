@@ -1,6 +1,6 @@
 package com.orjujeng.profile.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 

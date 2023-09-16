@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orjujeng.profile.mapper.BindingMapper">
+	<select id="getBindingInfo" parameterType="Integer" resultType="com.orjujeng.profile.entity.BindingInfo">
+  		SELECT * FROM binding_info WHERE member_id  = ${member_id} and account_num = #{accountNum};
+ 	</select>
+ 	
+ 	
+	<update id ="updateBindInfo" parameterType="com.orjujeng.profile.entity.BindingInfo" useGeneratedKeys="true" keyProperty="seqId">
+		UPDATE binding_info
+		<set>
+		<if test = "projectCode!=null">
+			project_code = #{projectCode},
+		</if>
+		<if test = "startDate!=null">
+			start_date = #{startDate},
+		</if>
+		<if test = "expireDate!=null">
+			expire_date = #{expireDate},
+		</if>
+		<if test = "proportion!=null">
+			proportion = ${proportion},
+		</if>
+		last_update_date = sysdate(),
+		changed_by = #{changedBy}
+		</set>
+		where member_id = ${memberId} and account_num = #{accountNum}
+	</update>
+	<insert id ="insertBindInfoLog" parameterType="com.orjujeng.profile.entity.BindingInfoLog" useGeneratedKeys="true" keyProperty="seqId">
+	insert into binding_info_log(id,member_id,account_num,project_code,start_date,expire_date,proportion,last_update_date,changed_by,action) 
+	values (${id},${memberId},#{accountNum},#{projectCode},#{startDate},#{expireDate},#{proportion},sysdate(),#{changedBy},#{action});
+	</insert>
+</mapper>
