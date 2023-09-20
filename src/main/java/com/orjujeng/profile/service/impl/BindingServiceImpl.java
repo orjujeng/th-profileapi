@@ -19,7 +19,7 @@ import com.orjujeng.profile.mapper.BindingMapper;
 import com.orjujeng.profile.mapper.MemberMapper;
 import com.orjujeng.profile.service.BindingService;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
+
 import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
@@ -101,9 +101,6 @@ public class BindingServiceImpl implements BindingService{
 
 	@Override
 	public List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum) {
-//		if(id == null && memberId ==null && accountNum ==null) {
-//			throw new AccountNotExistException("Request Info with error");
-//		}
 		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId == null ? null: Integer.valueOf(memberId), accountNum,id == null ? null:Integer.valueOf(id));
 		return result;
 	}

@@ -1,5 +1,6 @@
 package com.orjujeng.profile.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -8,14 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import reactor.util.annotation.NonNull;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProjectInfo {
-	@NonNull
+public class ProjectInfo implements Serializable{
+	@NotNull
 	private Integer id;
 	private String projectCode;
 	private String projectName;

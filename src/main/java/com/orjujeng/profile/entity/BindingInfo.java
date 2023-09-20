@@ -4,6 +4,7 @@ package com.orjujeng.profile.entity;
 
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BindingInfo {
+public class BindingInfo implements Serializable{
 	private Integer id;
 	private Integer memberId;
 	private String  accountNum;

@@ -1,5 +1,6 @@
 package com.orjujeng.profile.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddBindingInfo {
+public class AddBindingInfo implements Serializable{
 	private Integer id;
 	@NotNull
 	private Integer memberId;

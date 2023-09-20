@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.cache.annotation.Cacheable;
 
 import com.orjujeng.profile.entity.ProjectInfo;
 @Mapper

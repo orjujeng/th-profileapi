@@ -1,5 +1,6 @@
 package com.orjujeng.profile.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BindingInfoLog {
+public class BindingInfoLog implements Serializable{
 	private Integer seqId;
 	private Integer id;
 	private Integer memberId;

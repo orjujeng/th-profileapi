@@ -1,5 +1,6 @@
 package com.orjujeng.profile.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class MemberInfoLog {
+public class MemberInfoLog implements Serializable{
 	private int seqId;
 	private Integer id;
 	private String nameZh;

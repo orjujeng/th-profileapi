@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	@Transactional
+	@CacheEvict(value = "PROFILE",key = "'getAllMemberinfo'")
 	public Result updateMemberinfo(MemberInfo memberInfo) {
 		List<MemberInfo> memberinfos  = this.getMemberinfo(memberInfo.getAccountNum());
 		if(memberinfos == null || memberinfos.isEmpty()) {
@@ -86,6 +89,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	@Transactional
+	@CacheEvict(value = "PROFILE",key = "'getAllMemberinfo'")
 	public Result createMemberinfo(MemberInfo memberInfo) {
 		if(memberInfo.getNameCn() == null || memberInfo.getNameZh() == null || memberInfo.getPerm() == null || memberInfo.getAuthOfBackend() == null) {
 			throw new CreateProfileMsgUnfitException("Create Profile Msg Unfit");

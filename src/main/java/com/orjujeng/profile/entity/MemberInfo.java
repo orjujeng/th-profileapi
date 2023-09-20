@@ -2,6 +2,7 @@ package com.orjujeng.profile.entity;
 
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
@@ -15,7 +16,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class MemberInfo{
+public class MemberInfo implements Serializable{
 	private Integer id;
 	private String nameZh;
 	private String nameCn;
