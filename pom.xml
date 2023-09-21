@@ -12,7 +12,8 @@
 	<artifactId>th-profile-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>th-profile-api</name>
-	<description>Demo project for Spring Boot</description>
+	<description>th-profile-api</description>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2021.0.1</spring-cloud.version>
