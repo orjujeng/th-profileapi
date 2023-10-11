@@ -25,7 +25,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	ProjectMapper projectMapper;
 	@Override
-	
 	public List<ProjectInfo> getAllProject(Boolean expiredDate) {
 		List<ProjectInfo> result = null; 
 		if(expiredDate == null || expiredDate == false ) {
