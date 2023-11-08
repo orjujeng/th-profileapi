@@ -70,7 +70,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	@Transactional
 	public void addProject(ProjectInfo projectInfo) {
-		if(projectInfo.getProjectCode() == null || projectInfo.getExpireDate() == null || projectInfo.getProjectName()  == null ) {
+		if(projectInfo.getProjectCode() == null || projectInfo.getExpireDate() == null || projectInfo.getProjectName() == null ) {
 			throw new CreateNewProjectMsgUnfitExcption("Create New Project Msg Unfit");
 		}else {
 			projectMapper.insertNewProject(projectInfo);

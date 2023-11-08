@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import com.orjujeng.profile.entity.ProjectInfo;
 @Mapper
 public interface ProjectMapper {
+	
 	public List<ProjectInfo> getAllProjectinfo(@Param("date") String date);
 
 	public ProjectInfo getProjectById(@Param("id") int id);

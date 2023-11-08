@@ -10,7 +10,7 @@ import com.orjujeng.profile.entity.BindingInfoLog;
 
 public interface BindingMapper {
 
-	List<BindingInfo> getBindingInfo(@Param("member_id") Integer memberId, @Param("account_num") String accountNum, @Param("id") Integer id);
+	List<BindingInfo> getBindingInfo(@Param("member_id") Integer memberId, @Param("account_num") String accountNum, @Param("id") Integer id,@Param("project_code") String projectCode);
 
 	void updateBindInfo(BindingInfo updateBindingInfo);
 

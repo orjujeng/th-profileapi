@@ -19,7 +19,9 @@ public interface MemberMapper {
 
 	public boolean insertMemberinfoLog(MemberInfoLog memberInfoLog);
 
-	public boolean insertMemberInfo(MemberInfo memberInfo);
+	public int insertMemberInfo(MemberInfo memberInfo);
 
 	public MemberInfo getMemberInfoByMaxId();
+	
+	public List<MemberInfo> getMemberInfoById(Integer id);
 }

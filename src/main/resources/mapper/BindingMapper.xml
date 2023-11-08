@@ -15,6 +15,9 @@
   		<if test = "id!=null">
 		 and id = #{id}
 		</if>
+		<if test = "project_code!=null">
+		 and project_code = #{project_code}
+		</if>
 		</where>
  	</select>
  	

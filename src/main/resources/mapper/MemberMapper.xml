@@ -56,4 +56,10 @@
  	SELECT * FROM member_info 
  	where id = (SELECT max(id) FROM member_info);
  </select>
+ 
+ <select id="getMemberInfoById" resultType="com.orjujeng.profile.entity.MemberInfo">
+ 	SELECT * FROM member_info 
+ 	where id = #{id};
+ </select>
+ 
 </mapper>

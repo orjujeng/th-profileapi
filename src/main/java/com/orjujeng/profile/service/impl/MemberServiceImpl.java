@@ -94,12 +94,12 @@ public class MemberServiceImpl implements MemberService{
 		if(memberInfo.getNameCn() == null || memberInfo.getNameZh() == null || memberInfo.getPerm() == null || memberInfo.getAuthOfBackend() == null) {
 			throw new CreateProfileMsgUnfitException("Create Profile Msg Unfit");
 		}else {
-			boolean result = memberMapper.insertMemberInfo(memberInfo);
-			if (result == true) {
+			int changeRow = memberMapper.insertMemberInfo(memberInfo);
+			if (changeRow==1) {
 				MemberInfo insertInfo = memberMapper.getMemberInfoByMaxId();
 				if(insertInfo.getNameCn().equals(memberInfo.getNameCn()) && insertInfo.getNameZh().equals(memberInfo.getNameZh()) && insertInfo.getPerm().equals(memberInfo.getPerm()) && insertInfo.getAuthOfBackend().equals(memberInfo.getAuthOfBackend())) {
 					MemberInfoLog memberInfoLog = new MemberInfoLog();
-					//To Do add the request orgin
+					//TODO add the request orgin
 					memberInfoLog.setUpdateBy("Profile Api");
 					memberInfoLog.setAction("Insert");
 					BeanUtils.copyProperties(insertInfo,memberInfoLog);
@@ -110,12 +110,19 @@ public class MemberServiceImpl implements MemberService{
 						e.printStackTrace();
 						return Result.successWithMsg("insert MemberinfoLog Failed, Please check",null);
 					}
-					return Result.success(null);
+					return Result.success(memberInfo.getId());
 				}else {
 					return Result.error(ResultCode.DATA_INSTER_ERROR.code, "MemberInfo Data Insert Error", null);
 				}
 			}
 		}
 		 return Result.error(ResultCode.DATA_INSTER_ERROR.code, "MemberInfo Data Insert Error", null);
+	}
+
+	@Override
+	public List<MemberInfo> getMemberInfoById(Integer id) {
+		List<MemberInfo> result = memberMapper.getMemberInfoById(id);
+		log.info(result.toString());
+		return result;
 	}
 }

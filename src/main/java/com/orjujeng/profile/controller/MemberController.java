@@ -42,6 +42,12 @@ public class MemberController {
 	@PostMapping("/addMember")
 	public Result addNewProfile(@RequestBody MemberInfo memberInfo) {
 		Result result = memberService.createMemberinfo(memberInfo);
-		return Result.success(null);
+		return result;
+	}
+	
+	@GetMapping("/getMemberById")
+	public Result getMemberInfoById(@RequestParam(required = false) Integer id) {
+		List<MemberInfo> result  = memberService.getMemberInfoById(id);
+		return Result.success(result);
 	}
 }

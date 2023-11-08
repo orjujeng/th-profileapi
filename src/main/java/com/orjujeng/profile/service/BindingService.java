@@ -16,6 +16,5 @@ public interface BindingService {
 
 	void addBindingInfo(AddBindingInfo bindingInfo);
 
-	List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum);
-
+	public List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum, String projectCode);
 }

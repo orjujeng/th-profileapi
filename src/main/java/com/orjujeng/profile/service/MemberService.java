@@ -14,4 +14,6 @@ public interface MemberService {
 	Result updateMemberinfo(MemberInfo memberInfo);
 
 	Result createMemberinfo(MemberInfo memberInfo);
+
+	List<MemberInfo> getMemberInfoById(Integer id);
 }

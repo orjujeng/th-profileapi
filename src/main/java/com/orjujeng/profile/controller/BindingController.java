@@ -41,8 +41,8 @@ public class BindingController {
 	}
 	
 	@GetMapping("/findbinding")
-	public Result findbinding(@RequestParam(required = false) String id,@RequestParam(required = false)String memberId,@RequestParam(required = false) @Length(min = 8, max = 8, message = "Account Number Must 8 Digs") String accountNum) {
-		List<BindingInfo> result = bindingService.checkBindingInfo(id,memberId,accountNum);
+	public Result findbinding(@RequestParam(required = false) String id,@RequestParam(required = false)String memberId,@RequestParam(required = false) @Length(min = 8, max = 8, message = "Account Number Must 8 Digs") String accountNum,@RequestParam(required = false) String projectCode) {
+		List<BindingInfo> result = bindingService.checkBindingInfo(id,memberId,accountNum,projectCode);
 		return Result.successWithMsg(result,"Success");
 	}
 }

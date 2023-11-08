@@ -34,7 +34,7 @@ public class BindingServiceImpl implements BindingService{
 		Integer memberId = bindingInfo.getMemberId();
 		String accountNum = bindingInfo.getAccountNum();
 		Integer id = bindingInfo.getId();
-		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId,accountNum,id);
+		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId,accountNum,id,null);
 		if (result == null || result.size() != 1 ) {
 			throw new AccountNotExistException("Binding Info Not Exist");
 		}
@@ -55,7 +55,7 @@ public class BindingServiceImpl implements BindingService{
 		updateBindingInfo.setId(bindingInfo.getId());
 		
 		bindingMapper.updateBindInfo(updateBindingInfo);
-		List<BindingInfo> res = bindingMapper.getBindingInfo(memberId, accountNum,null);
+		List<BindingInfo> res = bindingMapper.getBindingInfo(memberId, accountNum,null,null);
 		int flag = 0;
 		for (BindingInfo re : res) {
 			// TODO change to update
@@ -85,7 +85,7 @@ public class BindingServiceImpl implements BindingService{
 		if(memberinfoByAccount.get(0).getId() != memberId){
 			throw new BindingInfoNotMatchException("Binding Info Not Match");
 		}
-		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId, accountNum,null);
+		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId, accountNum,null,null);
 		for (BindingInfo res : result) {
 			// TODO change to update
 			if(res.getProjectCode().equals(bindingInfo.getProjectCode()) ) {
@@ -100,8 +100,8 @@ public class BindingServiceImpl implements BindingService{
 	}
 
 	@Override
-	public List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum) {
-		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId == null ? null: Integer.valueOf(memberId), accountNum,id == null ? null:Integer.valueOf(id));
+	public List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum, String projectCode) {
+		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId == null ? null: Integer.valueOf(memberId), accountNum,id == null ? null:Integer.valueOf(id),projectCode);
 		return result;
 	}
 
