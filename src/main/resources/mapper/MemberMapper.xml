@@ -61,5 +61,14 @@
  	SELECT * FROM member_info 
  	where id = #{id};
  </select>
+ <delete id="deleteMemberInfo">
+ 	Delete from member_info
+ 	where id =#{id}
+ </delete>
+ <select id="getMemberByManagerId" resultType="com.orjujeng.profile.entity.MemberInfo">
+ 	SELECT * FROM member_info 
+ 	where manager_id = #{memberId}
+ 	or id = #{memberId};
+ </select>
  
 </mapper>

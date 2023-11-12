@@ -13,8 +13,6 @@ import com.orjujeng.profile.entity.UpdateBindingInfo;
 public interface BindingService {
 
 	void updateBindingInfo(UpdateBindingInfo bindingInfo);
-
-	void addBindingInfo(AddBindingInfo bindingInfo);
-
 	public List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum, String projectCode);
+
 }

@@ -18,6 +18,7 @@ import com.orjujeng.profile.entity.BindingInfo;
 import com.orjujeng.profile.entity.ProjectInfo;
 import com.orjujeng.profile.entity.UpdateBindingInfo;
 import com.orjujeng.profile.service.BindingService;
+import com.orjujeng.profile.service.MemberService;
 import com.orjujeng.profile.utils.Result;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BindingController {
 	@Autowired
 	BindingService bindingService;
+	
+	@Autowired
+	MemberService memberService;
+	
 	@PostMapping("/updatebinding")
 	public Result updatebinding(@RequestBody @Valid UpdateBindingInfo bindingInfo) {
 		bindingService.updateBindingInfo(bindingInfo);
@@ -36,7 +41,7 @@ public class BindingController {
 	
 	@PostMapping("/addbinding")
 	public Result addbinding(@RequestBody @Valid AddBindingInfo bindingInfo) {
-		bindingService.addBindingInfo(bindingInfo);
+		memberService.addBindingInfo(bindingInfo);
 		return Result.successWithMsg(null,"Insert Binding Info Success");
 	}
 	
@@ -44,5 +49,11 @@ public class BindingController {
 	public Result findbinding(@RequestParam(required = false) String id,@RequestParam(required = false)String memberId,@RequestParam(required = false) @Length(min = 8, max = 8, message = "Account Number Must 8 Digs") String accountNum,@RequestParam(required = false) String projectCode) {
 		List<BindingInfo> result = bindingService.checkBindingInfo(id,memberId,accountNum,projectCode);
 		return Result.successWithMsg(result,"Success");
+	}
+	
+	@PostMapping("/deletebinding")
+	public Result deletebinding(@RequestParam(required = true,value = "accountNum") String accountNum) {
+		memberService.deleteBindingInfo(accountNum);
+		return Result.successWithMsg(null,"Delete Binding Info Success");
 	}
 }

@@ -50,4 +50,8 @@
 	<insert id ="insertBindingInfo" parameterType="com.orjujeng.profile.entity.BindingInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into binding_info(member_id,account_num,project_code,start_date,expire_date,proportion,last_update_date,changed_by) values(${memberId},#{accountNum},#{projectCode},#{startDate},#{expireDate},#{proportion},sysdate(),#{changedBy});
 	</insert>
+	
+	<delete id ="deleteBindingInfo">
+		delete from binding_info where account_num =#{accountNum};
+	</delete>
 </mapper>

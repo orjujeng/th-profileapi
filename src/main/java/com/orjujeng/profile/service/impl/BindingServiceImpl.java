@@ -18,91 +18,50 @@ import com.orjujeng.profile.exception.BindingInfoNotMatchException;
 import com.orjujeng.profile.mapper.BindingMapper;
 import com.orjujeng.profile.mapper.MemberMapper;
 import com.orjujeng.profile.service.BindingService;
-
+import com.orjujeng.profile.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Slf4j
-public class BindingServiceImpl implements BindingService{
+public class BindingServiceImpl implements BindingService {
 	@Autowired
 	BindingMapper bindingMapper;
 	@Autowired
 	MemberMapper memberMapper;
+
+	@Autowired
+	MemberService memberService;
+
 	@Override
 	@Transactional
 	public void updateBindingInfo(UpdateBindingInfo bindingInfo) {
 		Integer memberId = bindingInfo.getMemberId();
 		String accountNum = bindingInfo.getAccountNum();
 		Integer id = bindingInfo.getId();
-		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId,accountNum,id,null);
-		if (result == null || result.size() != 1 ) {
+		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId, accountNum, id, null);
+		if (result == null) {
 			throw new AccountNotExistException("Binding Info Not Exist");
 		}
-		BindingInfo updateBindingInfo = new BindingInfo();
-		String oldProjectCode = result.get(0).getProjectCode();
-		Integer oldProportion = result.get(0).getProportion();
-		updateBindingInfo.setId(result.get(0).getId());
-		updateBindingInfo.setProjectCode(bindingInfo.getProjectCode().equals(oldProjectCode)?null:bindingInfo.getProjectCode());
-		updateBindingInfo.setProportion(bindingInfo.getProportion() == oldProportion?null:bindingInfo.getProportion());
-		updateBindingInfo.setStartDate(bindingInfo.getStartDate().equals(result.get(0).getStartDate())?null:bindingInfo.getStartDate());
-		updateBindingInfo.setExpireDate(bindingInfo.getExpireDate().equals(result.get(0).getExpireDate())?null:bindingInfo.getExpireDate());
-		if(updateBindingInfo.getProjectCode() == null && updateBindingInfo.getProportion() == null && updateBindingInfo.getStartDate() == null && updateBindingInfo.getExpireDate() == null) {
-			return;
+		memberService.deleteBindingInfo(result.get(0).getAccountNum());
+		for(int i = 0;i<bindingInfo.getProjectCode().size();i++ ) {
+			AddBindingInfo updateBindingInfo = new AddBindingInfo();
+			updateBindingInfo.setAccountNum(result.get(0).getAccountNum());
+			updateBindingInfo.setChangedBy(bindingInfo.getChangedBy());
+			updateBindingInfo.setExpireDate(bindingInfo.getExpireDate().get(i));
+			updateBindingInfo.setMemberId(bindingInfo.getMemberId());
+			updateBindingInfo.setStartDate(bindingInfo.getStartDate().get(i));
+			updateBindingInfo.setProjectCode(bindingInfo.getProjectCode().get(i));
+			updateBindingInfo.setProportion(100/bindingInfo.getProjectCode().size());
+			memberService.addBindingInfo(updateBindingInfo);
 		}
-		updateBindingInfo.setChangedBy(bindingInfo.getChangedBy());
-		updateBindingInfo.setMemberId(memberId);
-		updateBindingInfo.setAccountNum(accountNum);
-		updateBindingInfo.setId(bindingInfo.getId());
-		
-		bindingMapper.updateBindInfo(updateBindingInfo);
-		List<BindingInfo> res = bindingMapper.getBindingInfo(memberId, accountNum,null,null);
-		int flag = 0;
-		for (BindingInfo re : res) {
-			// TODO change to update
-			if(re.getProjectCode().equals(bindingInfo.getProjectCode())) {
-				flag++;
-			}	
-		}
-		if(flag > 1) {
-			throw new BindingInfoNotMatchException("Updated Binding Project Code Already Exist In Other Row");
-		}
-		BindingInfoLog log_info  = new BindingInfoLog();
-		BeanUtils.copyProperties(updateBindingInfo, log_info);
-		log_info.setAction("Update");
-		bindingMapper.insertBindInfoLog(log_info);
 	}
 
-	@Override
-	@Transactional
-	public void addBindingInfo(AddBindingInfo bindingInfo) {
-		 
-		Integer memberId = bindingInfo.getMemberId();
-		String accountNum = bindingInfo.getAccountNum();
-		List<MemberInfo> memberinfoByAccount = memberMapper.getMemberinfoByAccount(accountNum);
-		if(memberinfoByAccount == null || memberinfoByAccount.size() != 1) {
-			throw new AccountNotExistException("Not Found this AccountNum");
-		}
-		if(memberinfoByAccount.get(0).getId() != memberId){
-			throw new BindingInfoNotMatchException("Binding Info Not Match");
-		}
-		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId, accountNum,null,null);
-		for (BindingInfo res : result) {
-			// TODO change to update
-			if(res.getProjectCode().equals(bindingInfo.getProjectCode()) ) {
-				throw new BindingInfoNotMatchException("Binding Project Code already Exist");
-			}
-		}
-		bindingMapper.insertBindingInfo(bindingInfo);
-		BindingInfoLog log_info  = new BindingInfoLog();
-		BeanUtils.copyProperties(bindingInfo, log_info);
-		log_info.setAction("Insert");
-		bindingMapper.insertBindInfoLog(log_info);
-	}
-
+	
 	@Override
 	public List<BindingInfo> checkBindingInfo(String id, String memberId, String accountNum, String projectCode) {
-		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId == null ? null: Integer.valueOf(memberId), accountNum,id == null ? null:Integer.valueOf(id),projectCode);
+		List<BindingInfo> result = bindingMapper.getBindingInfo(memberId == null ? null : Integer.valueOf(memberId),
+				accountNum, id == null ? null : Integer.valueOf(id), projectCode);
 		return result;
 	}
-
 }

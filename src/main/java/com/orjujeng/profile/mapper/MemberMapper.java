@@ -24,4 +24,8 @@ public interface MemberMapper {
 	public MemberInfo getMemberInfoByMaxId();
 	
 	public List<MemberInfo> getMemberInfoById(Integer id);
+	
+	public void deleteMemberInfo(Integer id);
+	
+	public List<MemberInfo> getMemberByManagerId(Integer memberId);
 }

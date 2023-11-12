@@ -18,4 +18,6 @@ public interface BindingMapper {
 
 	void insertBindingInfo(AddBindingInfo bindingInfo);
 
+	void deleteBindingInfo(String accountNum);
+
 }

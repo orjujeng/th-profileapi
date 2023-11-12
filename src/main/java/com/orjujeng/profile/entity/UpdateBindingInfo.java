@@ -2,6 +2,7 @@ package com.orjujeng.profile.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -20,9 +21,9 @@ public class UpdateBindingInfo implements Serializable{
 	@NotNull
 	private Integer memberId;
 	private String  accountNum;
-	private String projectCode;
-	private Date startDate;
-	private Date expireDate;
+	private List<String> projectCode;
+	private List<Date> startDate;
+	private List<Date> expireDate;
 	private Integer proportion;
 	private Date lastUpdateDate;
 	private String changedBy;
